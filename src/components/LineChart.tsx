@@ -84,12 +84,17 @@ const statusColor = {
   Sponsored: "bg-violet-500",
 };
 
-export default function LineChart() {
+type Props = {
+  title: string;
+  data: { title: string; value: number }[];
+};
+
+export default function LineChart({ title }: Props) {
   return (
     <>
       <Card className="mx-auto rounded-lg border p-4">
-        <h3 className="font-medium text-tremor-content-strong dark:text-dark-tremor-content-strong">
-          Follower metrics
+        <h3 className="font-medium text-tremor-content-strong text-start dark:text-dark-tremor-content-strong">
+          Huminity Level
         </h3>
         <AreaChart
           data={data}
@@ -107,7 +112,10 @@ export default function LineChart() {
           {summary.map((item) => (
             <ListItem key={item.name} className="border-1">
               <div className="flex items-center space-x-2">
-                <span className={cn("h-0.5 w-3")} aria-hidden={true} />
+                <span
+                  className={cn(statusColor.Organic, "h-0.5 w-3")}
+                  aria-hidden={true}
+                />
                 <span>{item.name}</span>
               </div>
               <span className="font-medium text-tremor-content-strong dark:text-dark-tremor-content-strong">
