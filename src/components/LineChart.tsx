@@ -89,7 +89,7 @@ type Props = {
   data: { title: string; value: number }[];
 };
 
-export default function LineChart({ title }: Props) {
+export default function LineChart() {
   return (
     <>
       <Card className="mx-auto rounded-lg border p-4">
