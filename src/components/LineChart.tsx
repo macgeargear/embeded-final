@@ -103,9 +103,9 @@ export default function LineChart() {
           startEndOnly={true}
           className="mt-6 h-32"
         />
-        <List className="mt-2">
+        <List className="mt-2 border-gray-200">
           {summary.map((item) => (
-            <ListItem key={item.name}>
+            <ListItem key={item.name} className="border-1">
               <div className="flex items-center space-x-2">
                 <span className={cn("h-0.5 w-3")} aria-hidden={true} />
                 <span>{item.name}</span>
