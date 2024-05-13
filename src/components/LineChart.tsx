@@ -87,7 +87,7 @@ const statusColor = {
 export default function LineChart() {
   return (
     <>
-      <Card className="sm:mx-auto sm:max-w-lg">
+      <Card className="mx-auto rounded-lg border p-4">
         <h3 className="font-medium text-tremor-content-strong dark:text-dark-tremor-content-strong">
           Follower metrics
         </h3>
