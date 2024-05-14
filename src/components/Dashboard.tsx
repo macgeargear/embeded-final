@@ -1,33 +1,57 @@
+"use client";
 import React from "react";
-import MaxWidthWrapper from "./MaxwidthWrapper";
 import DashboardCard from "./DashboardCard";
-import { Icons } from "./Icons";
-import LineChart from "./LineChart";
+import Chart2 from "./GraphData";
+import { useQuery } from "@tanstack/react-query";
+import { getData } from "@/lib/firebase";
+import loading from "@/lotties/loading.json";
+import AirQualityTrend from "./AirQualityTrend";
+import AirQualityCategory from "./AirQualityCategory";
+import Chart from "./Chart";
+import { generateMockData } from "@/lib/utils";
+import GraphData from "./GraphData";
 
-type Props = {};
+export default function Dashboard() {
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: loading,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
 
-export default function Dashboard({}: Props) {
+  const { isLoading, isError } = useQuery({
+    queryKey: ["data"],
+    queryFn: getData,
+  });
+
+  // if (isLoading)
+  //   return <Lottie width={200} height={200} options={defaultOptions} />;
+  if (isError) throw new Error("An error occurred");
+
   return (
-    <div className="grid grid-cols-2 gap-4 mx-auto w-full">
-      <div className="flex flex-col gap-4">
-        <div className="grid grid-cols-2 gap-4">
-          <DashboardCard title="PM 2.5 Level" value={189} icon={Icons.wind()} />
-          <DashboardCard title="PM 2.5 Level" value={189} icon={Icons.wind()} />
-          <DashboardCard title="PM 2.5 Level" value={189} icon={Icons.wind()} />
-          <DashboardCard title="PM 2.5 Level" value={189} icon={Icons.wind()} />
+    <>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mx-auto w-full my-4 px-2">
+        <div className="flex flex-col gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <DashboardCard title="PM 2.5 Level" value={189} />
+            <DashboardCard title="Temperature" value={20} />
+            <DashboardCard title="Humidity Level" value={30} />
+            <DashboardCard title="Carbonmonoxide Level" value={30} />
+          </div>
+          <AirQualityTrend />
         </div>
-        <DashboardCard
-          title="Air Quality Level"
-          value={189}
-          icon={Icons.wind()}
-        />
-        <DashboardCard title="PM 2.5 Level" value={189} icon={Icons.wind()} />
-        <DashboardCard title="PM 2.5 Level" value={189} icon={Icons.wind()} />
+        <div className="flex flex-col gap-4">
+          <AirQualityCategory />
+        </div>
       </div>
-      <div className="flex flex-col gap-4">
-        <LineChart />
-        <LineChart />
+      <div className="border border-gray-200 w-full rounded-xl p-4">
+        <h1 className="text-md md:text-xl text-start font-semibold">
+          Air Quality Index
+        </h1>
+        <GraphData data={generateMockData()} />
       </div>
-    </div>
+    </>
   );
 }
