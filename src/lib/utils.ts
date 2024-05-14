@@ -7,7 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export type SensorData = {
-  date: Date;
+  date: string;
   pm25: number;
   humidity: number;
   co: number;
@@ -30,7 +30,7 @@ export function generateMockData() {
     "Dec",
   ];
   const years = ["23", "24"];
-  const data = [];
+  const data: SensorData = [];
 
   for (let year of years) {
     for (let month of months) {

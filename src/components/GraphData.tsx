@@ -1,16 +1,11 @@
+import { SensorData } from "@/lib/utils";
 import { LineChart } from "@tremor/react";
 
 const dataFormatter = (number: number) =>
   `${Intl.NumberFormat("us").format(number).toString()}`;
 
 type Props = {
-  data: {
-    date: string;
-    pm25: number;
-    humidity: number;
-    co: number;
-    temperature: number;
-  }[];
+  data: SensorData;
 };
 
 export default function GraphData({ data }: Props) {
@@ -19,7 +14,7 @@ export default function GraphData({ data }: Props) {
       className="h-80"
       data={data}
       index="date"
-      categories={["pm25"]}
+      categories={["pm25", "co"]}
       colors={["indigo", "rose"]}
       valueFormatter={dataFormatter}
       yAxisWidth={60}

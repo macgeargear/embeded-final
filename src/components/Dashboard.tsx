@@ -19,14 +19,14 @@ export default function Dashboard() {
     },
   };
 
-  const { isLoading, isError } = useQuery({
-    queryKey: ["data"],
-    queryFn: getData,
-  });
+  // const { isLoading, isError } = useQuery({
+  //   queryKey: ["data"],
+  //   queryFn: getData,
+  // });
 
   // if (isLoading)
   //   return <Lottie width={200} height={200} options={defaultOptions} />;
-  if (isError) throw new Error("An error occurred");
+  // if (isError) throw new Error("An error occurred");
 
   return (
     <>
