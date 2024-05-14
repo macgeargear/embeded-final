@@ -1,5 +1,4 @@
 import Dashboard from "@/components/Dashboard";
-import Chart2 from "@/components/GraphData";
 import MaxWidthWrapper from "@/components/MaxwidthWrapper";
 
 export default function Home() {

@@ -2,63 +2,10 @@
 import React, { useState } from "react";
 import CategoryCard from "./CategoryCard";
 import { Icons } from "./Icons";
-import Chart2 from "./GraphData";
-import Chart from "./Chart";
 import GraphData from "./GraphData";
 import { generateMockData } from "@/lib/utils";
 
 type Props = {};
-
-const data = [
-  {
-    date: "Jan 23",
-    value: 1000,
-  },
-  {
-    date: "Feb 23",
-    value: 0,
-  },
-  {
-    date: "Mar 23",
-    value: 999,
-  },
-  {
-    date: "Apr 23",
-    value: 273,
-  },
-  {
-    date: "May 23",
-    value: 73,
-  },
-  {
-    date: "Jun 23",
-    value: 2273,
-  },
-  {
-    date: "Jul 23",
-    value: 1273,
-  },
-  {
-    date: "Aug 23",
-    value: 4273,
-  },
-  {
-    date: "Sep 23",
-    value: 273,
-  },
-  {
-    date: "Oct 23",
-    value: 3273,
-  },
-  {
-    date: "Nov 23",
-    value: 2273,
-  },
-  {
-    date: "Dec 23",
-    value: 1273,
-  },
-];
 
 export default function AirQualityCategory({}: Props) {
   const [category, setCategory] = useState<string>("PM 2.5 Level");

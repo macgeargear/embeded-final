@@ -1,13 +1,11 @@
 "use client";
 import React from "react";
 import DashboardCard from "./DashboardCard";
-import Chart2 from "./GraphData";
 import { useQuery } from "@tanstack/react-query";
 import { getData } from "@/lib/firebase";
 import loading from "@/lotties/loading.json";
 import AirQualityTrend from "./AirQualityTrend";
 import AirQualityCategory from "./AirQualityCategory";
-import Chart from "./Chart";
 import { generateMockData } from "@/lib/utils";
 import GraphData from "./GraphData";
 
