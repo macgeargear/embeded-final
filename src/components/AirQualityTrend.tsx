@@ -50,7 +50,7 @@ export default function AirQualityTrend({ data }: Props) {
                 const afternoonTrend = getAQITrend(trend.afternoon);
                 const eveningTrend = getAQITrend(trend.evening);
                 return (
-                  <tr className="bg-white border-b hover:bg-gray-100" key={i}>
+                  <tr className="bg-white hover:bg-gray-100" key={i}>
                     <th
                       scope="row"
                       className={cn(

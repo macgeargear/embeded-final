@@ -280,11 +280,11 @@ export function getLabels(timeRange: number) {
 export function getSign(title: string): string {
   switch (title) {
     case "PM 2.5 Level":
-      return "mg";
+      return "µg/m3";
     case "Temperature":
       return "°C";
     case "Humidity Level":
-      return "mg";
+      return "%";
     case "Carbonmonoxide Level":
       return "PPM";
     default:
