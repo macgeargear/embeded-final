@@ -1,6 +1,7 @@
 import { Icons } from "@/components/Icons";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { format } from "date-fns";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -13,6 +14,14 @@ export type SensorData = {
   co: number;
   temperature: number;
 }[];
+
+export function formatDate(date: number) {
+  return format(new Date(Number(date) * 1000), "MM/dd/yyyy HH:mm:ss");
+}
+
+export function MapSensorData({}): SensorData {
+  return [];
+}
 
 export function generateMockData() {
   const months = [
