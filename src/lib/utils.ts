@@ -18,7 +18,59 @@ export type SensorData = {
 export type AQIData = {
   date: string;
   AQI: number;
+}[];
+
+enum AQILevel {
+  Good = "Good",
+  Moderate = "Moderate",
+  UnhealthyForSensitiveGroups = "Unhealthy for Sensitive Groups",
+  Unhealthy = "Unhealthy",
+  VeryUnhealthy = "Very Unhealthy",
+  Hazardous = "Hazardous",
+}
+
+export const AQIBasics = {
+  good: {
+    level: AQILevel.Good,
+    desc: "Air quality is satisfactory, and air pollution poses little or no risk.",
+    color: "bg-green-400",
+  },
+  moderate: {
+    level: AQILevel.Moderate,
+    desc: "Air quality is acceptable. However, there may be a risk for some people, particularly those who are unusually sensitive to air pollution.",
+    color: "bg-yellow-400",
+  },
+  unhealthyForSensitiveGroups: {
+    level: AQILevel.UnhealthyForSensitiveGroups,
+    desc: "Members of sensitive groups may experience health effects. The general public is less likely to be affected.",
+    color: "bg-orange-400",
+  },
+  unhealthy: {
+    level: AQILevel.Unhealthy,
+    desc: "Some members of the general public may experience health effects; members of sensitive groups may experience more serious health effects.",
+    color: "bg-red-400",
+  },
+  veryUnhealthy: {
+    level: AQILevel.VeryUnhealthy,
+    desc: "Health alert: The risk of health effects is increased for everyone.",
+    color: "bg-fuchsia-400",
+  },
+  hazardous: {
+    level: AQILevel.Hazardous,
+    desc: "Health warning of emergency conditions: everyone is more likely to be affected.",
+    color: "bg-red-400",
+  },
 };
+
+export function getAQITrend(AQI: number) {
+  if (AQI >= 0 && AQI <= 50) return AQIBasics["good"];
+  else if (AQI > 50 && AQI <= 100) return AQIBasics["moderate"];
+  else if (AQI > 100 && AQI <= 150)
+    return AQIBasics["unhealthyForSensitiveGroups"];
+  else if (AQI > 150 && AQI <= 200) return AQIBasics["unhealthy"];
+  else if (AQI > 200 && AQI <= 300) return AQIBasics["veryUnhealthy"];
+  else return AQIBasics["hazardous"];
+}
 
 export function formatDate(date: string) {
   return format(new Date(Number(date) * 1000), "MM/dd/yyyy HH:mm:ss");
@@ -38,62 +90,29 @@ export function mapSensorData(data: {
   });
 }
 
-export function MapAQIData(sensorData: SensorData) {
+export function mapAQIData(sensorData: SensorData) {
   return sensorData.map((data) => ({
     date: data.date,
     AQI: calculateAQI(data.pm25, data.humidity, data.co, data.temperature),
   }));
 }
 
-export const mockTrend: {
-  day: string;
-  morning: string;
-  afternoon: string;
-  evening: string;
-}[] = [
-  {
-    day: "Monday",
-    morning: "good",
-    afternoon: "normal",
-    evening: "bad",
-  },
-  {
-    day: "Tuesday",
-    morning: "very good",
-    afternoon: "good",
-    evening: "normal",
-  },
-  {
-    day: "Wednesday",
-    morning: "normal",
-    afternoon: "bad",
-    evening: "very bad",
-  },
-  {
-    day: "Thursday",
-    morning: "bad",
-    afternoon: "very bad",
-    evening: "normal",
-  },
-  {
-    day: "Friday",
-    morning: "good",
-    afternoon: "good",
-    evening: "good",
-  },
-  {
-    day: "Saturday",
-    morning: "normal",
-    afternoon: "bad",
-    evening: "very bad",
-  },
-  {
-    day: "Sunday",
-    morning: "very good",
-    afternoon: "good",
-    evening: "normal",
-  },
-];
+export function generateMockTrend() {
+  return [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ].map((day) => ({
+    day,
+    morning: Math.floor(Math.random() * 300),
+    afternoon: Math.floor(Math.random() * 300),
+    evening: Math.floor(Math.random() * 300),
+  }));
+}
 
 export function getWeekRange(date: Date = new Date()): string {
   const currentDay = date.getDay();
@@ -272,3 +291,5 @@ export function getSign(title: string): string {
       return "";
   }
 }
+
+export function AQITrend(AQI: number) {}
