@@ -6,8 +6,9 @@ import { getData } from "@/lib/firebase";
 import loading from "@/lotties/loading.json";
 import AirQualityTrend from "./AirQualityTrend";
 import AirQualityCategory from "./AirQualityCategory";
-import { generateMockData } from "@/lib/utils";
+import { formatDate, generateMockData } from "@/lib/utils";
 import GraphData from "./GraphData";
+import Lottie from "react-lottie";
 
 export default function Dashboard() {
   const defaultOptions = {
@@ -19,14 +20,18 @@ export default function Dashboard() {
     },
   };
 
-  // const { isLoading, isError } = useQuery({
-  //   queryKey: ["data"],
-  //   queryFn: getData,
-  // });
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["data"],
+    queryFn: getData,
+  });
 
-  // if (isLoading)
-  //   return <Lottie width={200} height={200} options={defaultOptions} />;
-  // if (isError) throw new Error("An error occurred");
+  if (isLoading)
+    return <Lottie width={200} height={200} options={defaultOptions} />;
+
+  console.log({ data });
+  Object.entries(data).forEach((d) => console.log(`date: ${formatDate(d[0])}`));
+
+  if (isError) throw new Error("An error occurred");
 
   return (
     <>
