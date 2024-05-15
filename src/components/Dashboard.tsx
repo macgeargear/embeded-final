@@ -2,16 +2,11 @@
 import React from "react";
 import DashboardCard from "./DashboardCard";
 import { useQuery } from "@tanstack/react-query";
-import { fetchData, getData } from "@/lib/firebase";
+import { getData } from "@/lib/firebase";
 import loading from "@/lotties/loading.json";
 import AirQualityTrend from "./AirQualityTrend";
 import AirQualityCategory from "./AirQualityCategory";
-import {
-  MapSensorData as mapSensorData,
-  formatDate,
-  generateMockData,
-  MapAQIData,
-} from "@/lib/utils";
+import { mapSensorData, MapAQIData } from "@/lib/utils";
 import GraphData from "./GraphData";
 import Lottie from "react-lottie";
 
@@ -35,9 +30,7 @@ export default function Dashboard() {
 
   if (isError) throw new Error("An error occurred");
 
-  console.log(data);
   const mappedData = mapSensorData(data);
-  // Object.entries(data).forEach((d) => console.log(`date: ${formatDate(d[0])}`));
 
   return (
     <>

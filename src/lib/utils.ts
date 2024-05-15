@@ -24,7 +24,7 @@ export function formatDate(date: string) {
   return format(new Date(Number(date) * 1000), "MM/dd/yyyy HH:mm:ss");
 }
 
-export function MapSensorData(data: {
+export function mapSensorData(data: {
   date: { humidity: number; co: number; temperature: number };
 }) {
   return Object.entries(data).map(([date, value]) => {
