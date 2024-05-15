@@ -1,4 +1,3 @@
-import { AQIData, SensorData } from "@/lib/utils";
 import { LineChart } from "@tremor/react";
 
 const dataFormatter = (number: number) =>
