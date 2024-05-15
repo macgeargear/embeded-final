@@ -6,7 +6,7 @@ import { getData } from "@/lib/firebase";
 import loading from "@/lotties/loading.json";
 import AirQualityTrend from "./AirQualityTrend";
 import AirQualityCategory from "./AirQualityCategory";
-import { mapSensorData, MapAQIData } from "@/lib/utils";
+import { mapSensorData, mapAQIData } from "@/lib/utils";
 import GraphData from "./GraphData";
 import Lottie from "react-lottie";
 
@@ -31,6 +31,7 @@ export default function Dashboard() {
   if (isError) throw new Error("An error occurred");
 
   const mappedData = mapSensorData(data);
+  const AQIData = mapAQIData(mappedData);
 
   return (
     <>
@@ -42,7 +43,7 @@ export default function Dashboard() {
             <DashboardCard title="Humidity Level" value={30} />
             <DashboardCard title="Carbonmonoxide Level" value={30} />
           </div>
-          <AirQualityTrend />
+          <AirQualityTrend data={AQIData} />
         </div>
         <div className="flex flex-col gap-4">
           <AirQualityCategory data={mappedData} />
@@ -52,7 +53,7 @@ export default function Dashboard() {
         <h1 className="text-md md:text-xl text-start font-semibold">
           Air Quality Index
         </h1>
-        <GraphData data={MapAQIData(mappedData)} category={["AQI"]} />
+        <GraphData data={mapAQIData(mappedData)} category={["AQI"]} />
       </div>
     </>
   );
