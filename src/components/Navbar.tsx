@@ -1,6 +1,10 @@
 import React from "react";
 import MaxWidthWrapper from "./MaxwidthWrapper";
 import Link from "next/link";
+import { Inter } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const inter = Inter({ subsets: ["latin"] });
 
 type Props = {};
 
@@ -10,7 +14,9 @@ export default function Navbar({}: Props) {
       <MaxWidthWrapper>
         <div className="flex h-14 items-center justify-between border-b border-zinc-200">
           <Link href="/" className="flex z-40 font-semibold">
-            <span className="text-primary text-xl">Embeded</span>
+            <span className={cn("text-primary text-xl", inter.className)}>
+              เฮียปุ๊นสั่งลุย
+            </span>
           </Link>
           <div className="h-full flex items-center space-x-4"></div>
         </div>

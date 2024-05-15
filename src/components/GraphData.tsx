@@ -10,15 +10,17 @@ type Props = {
 
 export default function GraphData({ data }: Props) {
   return (
-    <LineChart
-      className="h-80"
-      data={data}
-      index="date"
-      categories={["pm25", "co"]}
-      colors={["indigo", "rose"]}
-      valueFormatter={dataFormatter}
-      yAxisWidth={60}
-      onValueChange={(v) => console.log(v)}
-    />
+    <div className="p-4">
+      <LineChart
+        className="h-80"
+        data={data}
+        index="date"
+        categories={["pm25", "co"]}
+        colors={["indigo", "rose"]}
+        valueFormatter={dataFormatter}
+        yAxisWidth={60}
+        onValueChange={(v) => console.log(v)}
+      />
+    </div>
   );
 }

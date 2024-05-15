@@ -207,7 +207,7 @@ export function getIcon(title: string, value: number): JSX.Element {
         return Icons.cold({ width: 40, height: 40 });
       else return Icons.fire({ width: 40, height: 40 });
 
-    case "Huminity Level":
+    case "Humidity Level":
       if (value < 50) return Icons.desert({ width: 40, height: 40 });
       else return Icons.water({ width: 40, height: 40 });
     case "Carbonmonoxide Level":
@@ -243,6 +243,7 @@ export function getTimeString(time: number) {
 }
 
 const TIME_STEP = 10 * 60;
+
 export function getLabels(timeRange: number) {
   const timeTo = Math.floor(Date.now() / 1000);
   const timeFrom = timeTo - timeRange;
@@ -257,4 +258,19 @@ export function getLabels(timeRange: number) {
       );
     });
   return labels;
+}
+
+export function getSign(title: string): string {
+  switch (title) {
+    case "PM 2.5 Level":
+      return "mg";
+    case "Temperature":
+      return "°C";
+    case "Humidity Level":
+      return "mg";
+    case "Carbonmonoxide Level":
+      return "PPM";
+    default:
+      return "";
+  }
 }

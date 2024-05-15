@@ -30,7 +30,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mx-auto w-full my-4 px-2">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mx-auto w-full my-4">
         <div className="flex flex-col gap-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <DashboardCard title="PM 2.5 Level" value={189} />
@@ -44,7 +44,7 @@ export default function Dashboard() {
           <AirQualityCategory />
         </div>
       </div>
-      <div className="border border-gray-200 w-full rounded-xl p-4">
+      <div className="border border-gray-200 w-full rounded-xl p-4 mx-auto gap-4">
         <h1 className="text-md md:text-xl text-start font-semibold">
           Air Quality Index
         </h1>
