@@ -2,11 +2,16 @@
 import React from "react";
 import DashboardCard from "./DashboardCard";
 import { useQuery } from "@tanstack/react-query";
-import { getData } from "@/lib/firebase";
+import { fetchData, getData } from "@/lib/firebase";
 import loading from "@/lotties/loading.json";
 import AirQualityTrend from "./AirQualityTrend";
 import AirQualityCategory from "./AirQualityCategory";
-import { formatDate, generateMockData } from "@/lib/utils";
+import {
+  MapSensorData as mapSensorData,
+  formatDate,
+  generateMockData,
+  MapAQIData,
+} from "@/lib/utils";
 import GraphData from "./GraphData";
 import Lottie from "react-lottie";
 
@@ -28,10 +33,11 @@ export default function Dashboard() {
   if (isLoading)
     return <Lottie width={200} height={200} options={defaultOptions} />;
 
-  console.log({ data });
-  Object.entries(data).forEach((d) => console.log(`date: ${formatDate(d[0])}`));
-
   if (isError) throw new Error("An error occurred");
+
+  console.log(data);
+  const mappedData = mapSensorData(data);
+  // Object.entries(data).forEach((d) => console.log(`date: ${formatDate(d[0])}`));
 
   return (
     <>
@@ -46,14 +52,14 @@ export default function Dashboard() {
           <AirQualityTrend />
         </div>
         <div className="flex flex-col gap-4">
-          <AirQualityCategory />
+          <AirQualityCategory data={mappedData} />
         </div>
       </div>
       <div className="border border-gray-200 w-full rounded-xl p-4 mx-auto gap-4">
         <h1 className="text-md md:text-xl text-start font-semibold">
           Air Quality Index
         </h1>
-        <GraphData data={generateMockData()} />
+        <GraphData data={MapAQIData(mappedData)} category={["AQI"]} />
       </div>
     </>
   );

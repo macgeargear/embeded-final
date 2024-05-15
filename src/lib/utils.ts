@@ -15,45 +15,34 @@ export type SensorData = {
   temperature: number;
 }[];
 
+export type AQIData = {
+  date: string;
+  AQI: number;
+};
+
 export function formatDate(date: string) {
   return format(new Date(Number(date) * 1000), "MM/dd/yyyy HH:mm:ss");
 }
 
-export function MapSensorData({}): SensorData {
-  return [];
+export function MapSensorData(data: {
+  date: { humidity: number; co: number; temperature: number };
+}) {
+  return Object.entries(data).map(([date, value]) => {
+    return {
+      date: formatDate(date),
+      humidity: value["humidity"],
+      co: value["co"],
+      temperature: value["temperature"],
+      pm25: 30,
+    };
+  });
 }
 
-export function generateMockData() {
-  const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-  const years = ["23", "24"];
-  const data: SensorData = [];
-
-  for (let year of years) {
-    for (let month of months) {
-      data.push({
-        date: `${month} ${year}`,
-        pm25: Math.floor(Math.random() * 100),
-        humidity: Math.floor(Math.random() * 101),
-        co: Math.floor(Math.random() * 20),
-        temperature: Math.floor(Math.random() * 40),
-      });
-    }
-  }
-
-  return data;
+export function MapAQIData(sensorData: SensorData) {
+  return sensorData.map((data) => ({
+    date: data.date,
+    AQI: calculateAQI(data.pm25, data.humidity, data.co, data.temperature),
+  }));
 }
 
 export const mockTrend: {

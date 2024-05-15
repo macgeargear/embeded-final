@@ -92,6 +92,7 @@ C16.836,59.5,4.5,47.164,4.5,32S16.836,4.5,32,4.5c15.163,0,27.5,12.336,27.5,27.5S
   ),
   water: (props?: LucideProps) => (
     <svg
+      {...props}
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
