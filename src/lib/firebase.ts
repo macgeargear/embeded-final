@@ -1,6 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "@firebase/firestore";
-import { collection, getDocs } from "firebase/firestore";
+import { getDatabase, ref, get } from "firebase/database";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAi8nMriXzIoeAvu3FSxx5Rtmq46R4PWOA",
@@ -11,15 +10,13 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
+export const db = getDatabase(app);
 
 export async function fetchData() {
-  const snapshot = await getDocs(collection(db, "data"));
-  const newData = snapshot.docs.map((doc) => ({
-    ...doc.data(),
-    id: doc.id,
-  }));
-  return newData;
+  const db = getDatabase();
+  const humidityRef = ref(db, "data/test");
+  const snapshot = await get(humidityRef);
+  return snapshot.val();
 }
 
 export async function getData() {
