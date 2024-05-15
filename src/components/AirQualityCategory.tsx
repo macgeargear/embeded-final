@@ -30,7 +30,7 @@ export default function AirQualityCategory({ data }: Props) {
               icon={Icons.cold({ width: 30, height: 30 })}
             />
           </div>
-          <div onClick={() => setCategory("himidity")}>
+          <div onClick={() => setCategory("humidity")}>
             <CategoryCard
               title="Humidity Level"
               icon={Icons.water({ width: 30, height: 30 })}
@@ -44,7 +44,7 @@ export default function AirQualityCategory({ data }: Props) {
           </div>
         </div>
       </div>
-      <div className="rounded-xl border p-4 h-full">
+      <div className="flex flex-col justify-between rounded-xl border p-4 h-full">
         <h1 className="text-md md:text-xl font-semibold text-start mb-4 ">
           {category}
         </h1>
