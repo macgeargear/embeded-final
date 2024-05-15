@@ -15,7 +15,7 @@ export type SensorData = {
   temperature: number;
 }[];
 
-export function formatDate(date: number) {
+export function formatDate(date: string) {
   return format(new Date(Number(date) * 1000), "MM/dd/yyyy HH:mm:ss");
 }
 
