@@ -268,7 +268,7 @@ export function getSign(title: string): string {
       return "°C";
     case "Humidity Level":
       return "mg";
-    case "Carbonmonoxide Level":
+    case "Carbon monoxide Level":
       return "PPM";
     default:
       return "";
