@@ -1,10 +1,21 @@
 import React from "react";
 import MaxWidthWrapper from "./MaxwidthWrapper";
-import { getWeekRange, mockTrend } from "@/lib/utils";
+import {
+  AQIData,
+  AQITrend,
+  cn,
+  generateMockTrend,
+  getAQITrend,
+  getWeekRange,
+} from "@/lib/utils";
+import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
+import AQIDescriptionCard from "./AQIDescriptionCard";
 
-type Props = {};
+type Props = {
+  data: AQIData;
+};
 
-export default function AirQualityTrend({}: Props) {
+export default function AirQualityTrend({ data }: Props) {
   return (
     <MaxWidthWrapper className="w-full px-0 md:px-0">
       <div className="rounded-xl w-full border p-4">
@@ -34,19 +45,50 @@ export default function AirQualityTrend({}: Props) {
               </tr>
             </thead>
             <tbody>
-              {mockTrend.map((trend, i) => (
-                <tr className="bg-white border-b hover:bg-gray-100" key={i}>
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-                  >
-                    {trend.day}
-                  </th>
-                  <td className="px-6 py-4">{trend.morning}</td>
-                  <td className="px-6 py-4">{trend.afternoon}</td>
-                  <td className="px-6 py-4">{trend.evening}</td>
-                </tr>
-              ))}
+              {generateMockTrend().map((trend, i) => {
+                const morningTrend = getAQITrend(trend.morning);
+                const afternoonTrend = getAQITrend(trend.afternoon);
+                const eveningTrend = getAQITrend(trend.evening);
+                return (
+                  <tr className="bg-white hover:bg-gray-100" key={i}>
+                    <th
+                      scope="row"
+                      className={cn(
+                        "px-6 py-4 font-medium text-gray-900 whitespace-nowrap",
+                      )}
+                    >
+                      {trend.day}
+                    </th>
+                    <td
+                      className={cn("px-6 py-4 text-white", morningTrend.color)}
+                    >
+                      <AQIDescriptionCard
+                        level={morningTrend.level}
+                        desc={morningTrend.desc}
+                      />
+                    </td>
+                    <td
+                      className={cn(
+                        "px-6 py-4 text-white",
+                        afternoonTrend.color,
+                      )}
+                    >
+                      <AQIDescriptionCard
+                        level={afternoonTrend.level}
+                        desc={afternoonTrend.desc}
+                      />
+                    </td>
+                    <td
+                      className={cn("px-6 py-4 text-white", eveningTrend.color)}
+                    >
+                      <AQIDescriptionCard
+                        level={eveningTrend.level}
+                        desc={eveningTrend.desc}
+                      />
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
