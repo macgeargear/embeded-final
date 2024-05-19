@@ -7,8 +7,8 @@ import loading from "@/lotties/loading.json";
 import AirQualityTrend from "./AirQualityTrend";
 import AirQualityCategory from "./AirQualityCategory";
 import { mapSensorData, MapAQIData } from "@/lib/utils";
-import GraphData from "./GraphData";
 import Lottie from "react-lottie";
+import GraphRange from "./GraphRange";
 
 export default function Dashboard() {
   const defaultOptions = {
@@ -52,7 +52,9 @@ export default function Dashboard() {
         <h1 className="text-md md:text-xl text-start font-semibold">
           Air Quality Index
         </h1>
-        <GraphData data={MapAQIData(mappedData)} category={["AQI"]} />
+        <GraphRange  data={MapAQIData(mappedData)} category={["AQI"]}/>
+        {/* rawdata */}
+        {/* <GraphData data={MapAQIData(mappedData)} category={["AQI"]} /> */}
       </div>
     </>
   );
