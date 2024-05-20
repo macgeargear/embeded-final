@@ -291,5 +291,3 @@ export function getSign(title: string): string {
       return "";
   }
 }
-
-export function AQITrend(AQI: number) {}

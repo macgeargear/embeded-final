@@ -83,10 +83,7 @@ const mockSensorData: Props = {
   ]
 };
 export default function AirQualityCategory({ data }: Props) {
-  const [category, setCategory] = useState<string>("PM 2.5 Level");
-  useEffect(() => {
-    setCategory("pm25");
-  }, []);  
+  const [category, setCategory] = useState<string>("pm25");
   return (
     <>
       <div className="rounded-xl border p-4">
