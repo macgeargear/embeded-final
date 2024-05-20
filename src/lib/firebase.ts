@@ -16,7 +16,6 @@ export async function fetchData() {
   const db = getDatabase();
   const humidityRef = ref(db, "test");
   const snapshot = await get(humidityRef);
-  console.log(snapshot.val());
   return snapshot.val();
 }
 
