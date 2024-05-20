@@ -10,7 +10,7 @@ type Props = {
 };
 
 export default function AirQualityCategory({ data }: Props) {
-  const [category, setCategory] = useState<string>("PM 2.5 Level");
+  const [category, setCategory] = useState<string>("pm25");
   return (
     <>
       <div className="rounded-xl border p-4">
