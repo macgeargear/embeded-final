@@ -6,6 +6,7 @@ import { getData } from "@/lib/firebase";
 import AirQualityTrend from "./AirQualityTrend";
 import AirQualityCategory from "./AirQualityCategory";
 import { mapSensorData, mapAQIData } from "@/lib/utils";
+import GraphRange from "./GraphRange";
 import GraphData from "./GraphData";
 import { Loader } from "lucide-react";
 
@@ -52,7 +53,9 @@ export default function Dashboard() {
         <h1 className="text-md md:text-xl text-start font-semibold">
           Air Quality Index
         </h1>
-        <GraphData data={mapAQIData(mappedData)} category={["AQI"]} />
+        <GraphRange  data={mapAQIData(mappedData)} category={["AQI"]}/>
+        {/* rawdata */}
+        {/* <GraphData data={mapAQIData(mappedData)} category={["AQI"]} /> */}
       </div>
     </>
   );
