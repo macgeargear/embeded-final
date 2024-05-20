@@ -2,13 +2,11 @@ import React from "react";
 import MaxWidthWrapper from "./MaxwidthWrapper";
 import {
   AQIData,
-  AQITrend,
   cn,
   generateMockTrend,
   getAQITrend,
   getWeekRange,
 } from "@/lib/utils";
-import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import AQIDescriptionCard from "./AQIDescriptionCard";
 
 type Props = {
