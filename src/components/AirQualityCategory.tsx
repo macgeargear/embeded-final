@@ -4,6 +4,7 @@ import CategoryCard from "./CategoryCard";
 import { Icons } from "./Icons";
 import { SensorData } from "@/lib/utils";
 import GraphRange from "./GraphRange";
+import GraphData from "./GraphData";
 type Props = {
   data: SensorData;
 };
@@ -120,11 +121,11 @@ export default function AirQualityCategory({ data }: Props) {
         </div>
       </div>
       <div className="rounded-xl border p-4 h-full">
-        <h1 className="text-md md:text-xl font-semibold text-start mb-4 ">
+        <h1 className="text-md md:text-xl font-semibold text-start">
           {category}
         </h1>
-        <GraphRange  data={mockSensorData.data} category={[category]}/>
-        {/* <GraphData data={mockSensorData.data} category={[category]} /> */}
+        <GraphRange  data={data} category={[category]}/>
+        {/* <GraphData data={data} category={[category]} /> */}
       </div>
     </>
   );

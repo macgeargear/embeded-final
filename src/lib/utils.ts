@@ -16,7 +16,6 @@ export type SensorData = {
 }[];
 
 export type AQIData = {
-  forEach(arg0: (item: any) => void): unknown;
   date: string;
   AQI: number;
 }[];

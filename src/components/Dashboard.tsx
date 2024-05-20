@@ -5,15 +5,10 @@ import { useQuery } from "@tanstack/react-query";
 import { getData } from "@/lib/firebase";
 import AirQualityTrend from "./AirQualityTrend";
 import AirQualityCategory from "./AirQualityCategory";
-<<<<<<< HEAD
-import { mapSensorData, MapAQIData } from "@/lib/utils";
-import Lottie from "react-lottie";
-import GraphRange from "./GraphRange";
-=======
 import { mapSensorData, mapAQIData } from "@/lib/utils";
+import GraphRange from "./GraphRange";
 import GraphData from "./GraphData";
 import { Loader } from "lucide-react";
->>>>>>> e56fba428c17969c7dd1dd6325b0067f680a58ba
 
 export default function Dashboard() {
   const { data, isLoading, isError } = useQuery({
@@ -58,13 +53,9 @@ export default function Dashboard() {
         <h1 className="text-md md:text-xl text-start font-semibold">
           Air Quality Index
         </h1>
-<<<<<<< HEAD
-        <GraphRange  data={MapAQIData(mappedData)} category={["AQI"]}/>
+        <GraphRange  data={mapAQIData(mappedData)} category={["AQI"]}/>
         {/* rawdata */}
-        {/* <GraphData data={MapAQIData(mappedData)} category={["AQI"]} /> */}
-=======
-        <GraphData data={mapAQIData(mappedData)} category={["AQI"]} />
->>>>>>> e56fba428c17969c7dd1dd6325b0067f680a58ba
+        {/* <GraphData data={mapAQIData(mappedData)} category={["AQI"]} /> */}
       </div>
     </>
   );

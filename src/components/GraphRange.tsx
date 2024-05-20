@@ -9,8 +9,8 @@ type AQI = {
 var state = 1;
 const dataFreqAQI = (data: AQI[], interval: number): AQI[] => {
   const groupedData = new Map();
-  data = data.filter(item => !isNaN(item.AQI));
-  data.forEach((item) => {
+  const fileteredData = data.filter(item => !isNaN(item.AQI));
+  fileteredData.forEach((item) => {
     const date = new Date(item.date);
     let key;
 
@@ -49,8 +49,9 @@ const dataFreqAQI = (data: AQI[], interval: number): AQI[] => {
 };
 const dataFreq = (data: SensorData, interval: number): SensorData => {
   const groupedData = new Map();
+  const filteredData = data.filter(item => !isNaN(item.temperature && item.pm25 && item.humidity && item.co));
 
-  data.forEach((item) => {
+  filteredData.forEach((item) =>  {
     const date = new Date(item.date);
     let key;
 
@@ -68,6 +69,7 @@ const dataFreq = (data: SensorData, interval: number): SensorData => {
         key = String(date.getMonth()+"/"+date.getDate()+"/"+date.getFullYear()+" "+date.getHours()+":00:00");
         break;
     }
+    
   
     if (!groupedData.has(key)) {
       groupedData.set(key, { ...item, count: 1 });
@@ -76,9 +78,9 @@ const dataFreq = (data: SensorData, interval: number): SensorData => {
       groupedData.set(key, {
         date: key,
         pm25: existing.pm25 + item.pm25,
-        humidity: existing.humidity + item.humidity,
-        co: existing.co + item.co,
-        temperature: existing.temperature + item.temperature,
+        humidity: Number(existing.humidity) + Number(item.humidity),
+        co: Number(existing.co) + Number(item.co),
+        temperature: Number(existing.temperature) + Number(item.temperature),
         count: existing.count + 1,
       });
     }
@@ -138,11 +140,9 @@ export default function GraphRange({
   }else{
     plotData = dataFreq(data,state);
   }
-  const sign = getSign(title) || "";
     return (
-      <div className="">
+      <div className="block">
         <div className="flex items-start justify-between">
-        <h1 className="text-lg md:text-xl text-start font-semibold">{title}</h1>
         </div>
       <div className="gap-4 flex">
         <button
