@@ -60,10 +60,16 @@ export const AQIBasics = {
     desc: "Health warning of emergency conditions: everyone is more likely to be affected.",
     color: "bg-red-400",
   },
+  noData: {
+    level: "no data",
+    desc: "no data for this day",
+    color: "bg-slate-100 text-black",
+  },
 };
 
 export function getAQITrend(AQI: number) {
-  if (AQI >= 0 && AQI <= 50) return AQIBasics["good"];
+  if (AQI < 0) return AQIBasics["noData"];
+  else if (AQI >= 0 && AQI <= 50) return AQIBasics["good"];
   else if (AQI > 50 && AQI <= 100) return AQIBasics["moderate"];
   else if (AQI > 100 && AQI <= 150)
     return AQIBasics["unhealthyForSensitiveGroups"];
@@ -108,9 +114,7 @@ export function generateMockTrend() {
     "Sunday",
   ].map((day) => ({
     day,
-    morning: Math.floor(Math.random() * 300),
-    afternoon: Math.floor(Math.random() * 300),
-    evening: Math.floor(Math.random() * 300),
+    AQI: Math.floor(Math.random() * 300),
   }));
 }
 
@@ -287,4 +291,205 @@ export function getSign(title: string): string {
     default:
       return "";
   }
+}
+
+// * For graph range
+export function dataFreqAQI(data: AQIData, interval: number): AQIData {
+  const groupedData = new Map();
+  const fileteredData = data.filter((item) => !isNaN(item.AQI));
+  fileteredData.forEach((item) => {
+    const date = new Date(item.date);
+    let key;
+
+    switch (interval) {
+      case 1: // 1 hour
+        key = String(
+          date.getMonth() +
+            "/" +
+            date.getDate() +
+            "/" +
+            date.getFullYear() +
+            " " +
+            date.getHours() +
+            ":00:00"
+        );
+        break;
+      case 2: // 6 hours
+        key = String(
+          date.getMonth() +
+            "/" +
+            date.getDate() +
+            "/" +
+            date.getFullYear() +
+            " " +
+            Math.floor(date.getHours() / 6) * 6 +
+            ":00:00"
+        );
+        break;
+      case 3: // 1 day
+        key = String(
+          date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear()
+        );
+        break;
+      default:
+        key = String(
+          date.getMonth() +
+            "/" +
+            date.getDate() +
+            "/" +
+            date.getFullYear() +
+            " " +
+            date.getHours() +
+            ":00:00"
+        );
+        break;
+    }
+
+    if (!groupedData.has(key)) {
+      groupedData.set(key, { ...item, count: 1 });
+    } else {
+      const existing = groupedData.get(key);
+      groupedData.set(key, {
+        date: key,
+        AQI: item.AQI + existing.AQI,
+        count: existing.count + 1,
+      });
+    }
+  });
+
+  const averagedData: AQIData = Array.from(groupedData.values()).map(
+    (item) => ({
+      date: String(item.date),
+      AQI: item.AQI / item.count,
+    })
+  );
+  // console.log(averagedData);
+  return averagedData;
+}
+
+export function dataFreq(data: SensorData, interval: number): SensorData {
+  const groupedData = new Map();
+  const filteredData = data.filter(
+    (item) => !isNaN(item.temperature && item.pm25 && item.humidity && item.co)
+  );
+
+  filteredData.forEach((item) => {
+    const date = new Date(item.date);
+    let key;
+
+    switch (interval) {
+      case 1: // 1 hour
+        key = String(
+          date.getMonth() +
+            "/" +
+            date.getDate() +
+            "/" +
+            date.getFullYear() +
+            " " +
+            date.getHours() +
+            ":00:00"
+        );
+        break;
+      case 2: // 6 hours
+        key = String(
+          date.getMonth() +
+            "/" +
+            date.getDate() +
+            "/" +
+            date.getFullYear() +
+            " " +
+            Math.floor(date.getHours() / 6) * 6 +
+            ":00:00"
+        );
+        break;
+      case 3: // 1 day
+        key = String(
+          date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear()
+        );
+        break;
+      default:
+        key = String(
+          date.getMonth() +
+            "/" +
+            date.getDate() +
+            "/" +
+            date.getFullYear() +
+            " " +
+            date.getHours() +
+            ":00:00"
+        );
+        break;
+    }
+
+    if (!groupedData.has(key)) {
+      groupedData.set(key, { ...item, count: 1 });
+    } else {
+      const existing = groupedData.get(key);
+      groupedData.set(key, {
+        date: key,
+        pm25: existing.pm25 + item.pm25,
+        humidity: Number(existing.humidity) + Number(item.humidity),
+        co: Number(existing.co) + Number(item.co),
+        temperature: Number(existing.temperature) + Number(item.temperature),
+        count: existing.count + 1,
+      });
+    }
+  });
+
+  // Calculate the average for each interval
+  const averagedData: SensorData = Array.from(groupedData.values()).map(
+    (item) => ({
+      date: item.date,
+      pm25: item.pm25 / item.count,
+      humidity: item.humidity / item.count,
+      co: item.co / item.count,
+      temperature: item.temperature / item.count,
+    })
+  );
+  return averagedData;
+}
+
+export function AQITrend(
+  data: AQIData,
+  dateRange: { startOfWeek: Date; endOfWeek: Date }
+): { day: string; AQI: number }[] {
+  function getDayOfWeek(date: Date): string {
+    const days = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    return days[date.getUTCDay()];
+  }
+
+  // Generate the full week's structure with default AQI value of -999
+  const weekTrend: { day: string; AQI: number }[] = [];
+  for (
+    let d = dateRange.startOfWeek;
+    d <= dateRange.endOfWeek;
+    d.setDate(d.getDate() + 1)
+  ) {
+    weekTrend.push({
+      day: getDayOfWeek(new Date(d)),
+      AQI: -1,
+    });
+  }
+
+  // Update the AQI values based on the input data
+  data.forEach((entry) => {
+    const entryDate = new Date(entry.date);
+    if (
+      entryDate >= dateRange.startOfWeek &&
+      entryDate <= dateRange.endOfWeek
+    ) {
+      const index = entryDate.getDate() - dateRange.startOfWeek.getDate();
+      weekTrend[index].AQI = entry.AQI;
+    }
+  });
+
+  return weekTrend;
 }
