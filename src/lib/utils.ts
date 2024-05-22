@@ -131,11 +131,6 @@ export function getWeekRange(date: Date = new Date()): {
   // return `${formatDate(startOfWeek)} - ${formatDate(endOfWeek)}`;
 }
 
-export function getAQIWeek() {
-  const { startOfWeek, endOfWeek } = getWeekRange();
-  const startDate = Date(startOfWeek);
-}
-
 export function calculateAQI(
   pm25: number,
   humidity: number,
