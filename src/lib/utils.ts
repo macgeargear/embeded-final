@@ -114,7 +114,10 @@ export function generateMockTrend() {
   }));
 }
 
-export function getWeekRange(date: Date = new Date()): string {
+export function getWeekRange(date: Date = new Date()): {
+  startOfWeek: Date;
+  endOfWeek: Date;
+} {
   const currentDay = date.getDay();
   const daysToMonday = (currentDay + 6) % 7;
 
@@ -124,21 +127,20 @@ export function getWeekRange(date: Date = new Date()): string {
   const endOfWeek = new Date(startOfWeek);
   endOfWeek.setDate(startOfWeek.getDate() + 6);
 
-  const formatDate = (date: Date) => {
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
-  };
+  return { startOfWeek, endOfWeek };
+  // return `${formatDate(startOfWeek)} - ${formatDate(endOfWeek)}`;
+}
 
-  return `${formatDate(startOfWeek)} - ${formatDate(endOfWeek)}`;
+export function getAQIWeek() {
+  const { startOfWeek, endOfWeek } = getWeekRange();
+  const startDate = Date(startOfWeek);
 }
 
 export function calculateAQI(
   pm25: number,
   humidity: number,
   co: number,
-  temperature: number,
+  temperature: number
 ): number {
   // Define ranges and weights for each parameter
   const pm25Ranges = [
@@ -193,7 +195,7 @@ export function calculateAQI(
           (rangeMax - rangeMin)
       );
     },
-    0,
+    0
   );
 
   // Calculate weighted average of scores

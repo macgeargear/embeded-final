@@ -13,14 +13,23 @@ type Props = {
   data: AQIData;
 };
 
+const formatDate = (date: Date) => {
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+};
+
 export default function AirQualityTrend({ data }: Props) {
+  const { startOfWeek, endOfWeek } = getWeekRange();
+  const weekRange = `${formatDate(startOfWeek)} - ${formatDate(endOfWeek)}`;
   return (
     <MaxWidthWrapper className="w-full px-0 md:px-0">
       <div className="rounded-xl w-full border p-4">
         <h1 className="text-xl font-semibold text-start mb-4">
           Air Quality Trend for this week
           <span className="text-md bg-green-500 ml-4 text-white px-2">
-            {getWeekRange()}
+            {weekRange}
           </span>
         </h1>
 
@@ -52,7 +61,7 @@ export default function AirQualityTrend({ data }: Props) {
                     <th
                       scope="row"
                       className={cn(
-                        "px-6 py-4 font-medium text-gray-900 whitespace-nowrap",
+                        "px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                       )}
                     >
                       {trend.day}
@@ -68,7 +77,7 @@ export default function AirQualityTrend({ data }: Props) {
                     <td
                       className={cn(
                         "px-6 py-4 text-white",
-                        afternoonTrend.color,
+                        afternoonTrend.color
                       )}
                     >
                       <AQIDescriptionCard
