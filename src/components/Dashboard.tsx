@@ -20,7 +20,8 @@ export default function Dashboard() {
   if (isError) throw new Error("An error occurred");
 
   const mappedData = mapSensorData(data);
-  const currentData = mappedData[mappedData.length - 1];
+  const latestData = mappedData[mappedData.length - 1];
+  const latestDate = latestData["date"];
   const AQIData = mapAQIData(mappedData);
 
   return (
@@ -28,18 +29,25 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mx-auto w-full my-4">
         <div className="flex flex-col gap-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <DashboardCard title="PM 2.5 Level" value={currentData["pm25"]} />
+            <DashboardCard
+              title="PM 2.5 Level"
+              value={latestData["pm25"]}
+              date={latestDate}
+            />
             <DashboardCard
               title="Temperature"
-              value={currentData["temperature"]}
+              value={latestData["temperature"]}
+              date={latestDate}
             />
             <DashboardCard
               title="Humidity Level"
-              value={currentData["humidity"]}
+              value={latestData["humidity"]}
+              date={latestDate}
             />
             <DashboardCard
               title="Carbonmonoxide Level"
-              value={currentData["co"]}
+              value={latestData["co"]}
+              date={latestDate}
             />
           </div>
           <AirQualityTrend data={AQIData} />

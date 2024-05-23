@@ -15,9 +15,11 @@ type Props = {
 
 export default function AirQualityTrend({ data }: Props) {
   const AQIData = dataFreqAQI(data, 3);
-  const weekRange = getWeekRange();
-  const { startOfWeek } = weekRange;
-  const [date, setDate] = React.useState<Date | undefined>(startOfWeek);
+  const currWeekRange = getWeekRange();
+  const [date, setDate] = React.useState<Date | undefined>(
+    currWeekRange.startOfWeek
+  );
+  const { startOfWeek, endOfWeek } = getWeekRange(date);
   const trend = AQITrend(AQIData, date);
   return (
     <MaxWidthWrapper className="w-full px-0 md:px-0">
@@ -48,6 +50,9 @@ export default function AirQualityTrend({ data }: Props) {
               />
             </PopoverContent>
           </Popover>
+          <p className="font-sm px-2">
+            {format(startOfWeek, "PPP")} - {format(endOfWeek, "PPP")}
+          </p>
         </div>
 
         <div className="container mx-auto py-2">
