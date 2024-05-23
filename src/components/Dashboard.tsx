@@ -53,7 +53,7 @@ export default function Dashboard() {
         <h1 className="text-md md:text-xl text-start font-semibold">
           Air Quality Index
         </h1>
-        <GraphRange  data={mapAQIData(mappedData)} category={["AQI"]}/>
+        <GraphRange data={mapAQIData(mappedData)} category={["AQI"]} />
         {/* rawdata */}
         {/* <GraphData data={mapAQIData(mappedData)} category={["AQI"]} /> */}
       </div>
