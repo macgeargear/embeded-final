@@ -7,7 +7,6 @@ import AirQualityTrend from "./AirQualityTrend";
 import AirQualityCategory from "./AirQualityCategory";
 import { mapSensorData, mapAQIData } from "@/lib/utils";
 import GraphRange from "./GraphRange";
-import GraphData from "./GraphData";
 import { Loader } from "lucide-react";
 
 export default function Dashboard() {
@@ -54,8 +53,6 @@ export default function Dashboard() {
           Air Quality Index
         </h1>
         <GraphRange data={mapAQIData(mappedData)} category={["AQI"]} />
-        {/* rawdata */}
-        {/* <GraphData data={mapAQIData(mappedData)} category={["AQI"]} /> */}
       </div>
     </>
   );

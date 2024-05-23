@@ -1,15 +1,6 @@
 import React from "react";
 import MaxWidthWrapper from "./MaxwidthWrapper";
-import {
-  AQIData,
-  dataFreqAQI,
-  getAQITrend,
-  getWeekRange,
-  AQITrend,
-  cn,
-} from "@/lib/utils";
-import AQIDescriptionCard from "./AQIDescriptionCard";
-import { DatePicker } from "./DatePicker";
+import { AQIData, dataFreqAQI, getWeekRange, AQITrend, cn } from "@/lib/utils";
 import { DataTable } from "./AirQualityTrendTable/DataTable";
 import { columns } from "./AirQualityTrendTable/columns";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
@@ -20,13 +11,6 @@ import format from "date-fns/format";
 
 type Props = {
   data: AQIData;
-};
-
-const formatDate = (date: Date) => {
-  const day = date.getDate().toString();
-  const month = String(date.getMonth() + 1);
-  const year = date.getFullYear();
-  return `${month}/${day}/${year}`;
 };
 
 export default function AirQualityTrend({ data }: Props) {
