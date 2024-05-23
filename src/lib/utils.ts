@@ -305,6 +305,7 @@ export function dataFreqAQI(data: AQIData, interval: number): AQIData {
       case 1: // 1 hour
         key = String(
           date.getMonth() +
+            1 +
             "/" +
             date.getDate() +
             "/" +
@@ -317,6 +318,7 @@ export function dataFreqAQI(data: AQIData, interval: number): AQIData {
       case 2: // 6 hours
         key = String(
           date.getMonth() +
+            1 +
             "/" +
             date.getDate() +
             "/" +
@@ -328,12 +330,13 @@ export function dataFreqAQI(data: AQIData, interval: number): AQIData {
         break;
       case 3: // 1 day
         key = String(
-          date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear()
+          date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear()
         );
         break;
       default:
         key = String(
           date.getMonth() +
+            1 +
             "/" +
             date.getDate() +
             "/" +
@@ -476,7 +479,7 @@ export function AQITrend(
     d.setDate(d.getDate() + 1)
   ) {
     weekTrend.push({
-      date: getDayOfWeek(d),
+      date: format(d, "EEEE, dd MMM yyyy"),
       AQI: -1,
     });
   }
