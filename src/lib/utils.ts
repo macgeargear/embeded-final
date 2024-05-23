@@ -33,27 +33,27 @@ export const AQIBasics = {
   good: {
     level: AQILevel.Good,
     desc: "Air quality is satisfactory, and air pollution poses little or no risk.",
-    color: "bg-green-400",
+    color: "green-400",
   },
   moderate: {
     level: AQILevel.Moderate,
     desc: "Air quality is acceptable. However, there may be a risk for some people, particularly those who are unusually sensitive to air pollution.",
-    color: "bg-yellow-400",
+    color: "yellow-400",
   },
   unhealthyForSensitiveGroups: {
     level: AQILevel.UnhealthyForSensitiveGroups,
     desc: "Members of sensitive groups may experience health effects. The general public is less likely to be affected.",
-    color: "bg-orange-400",
+    color: "orange-400",
   },
   unhealthy: {
     level: AQILevel.Unhealthy,
     desc: "Some members of the general public may experience health effects; members of sensitive groups may experience more serious health effects.",
-    color: "bg-red-400",
+    color: "red-400",
   },
   veryUnhealthy: {
     level: AQILevel.VeryUnhealthy,
     desc: "Health alert: The risk of health effects is increased for everyone.",
-    color: "bg-fuchsia-400",
+    color: "fuchsia-400",
   },
   hazardous: {
     level: AQILevel.Hazardous,
@@ -363,7 +363,6 @@ export function dataFreqAQI(data: AQIData, interval: number): AQIData {
       AQI: item.AQI / item.count,
     })
   );
-  // console.log(averagedData);
   return averagedData;
 }
 
@@ -449,32 +448,32 @@ export function dataFreq(data: SensorData, interval: number): SensorData {
   return averagedData;
 }
 
+export function getDayOfWeek(date: Date): string {
+  const days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  return days[date.getUTCDay()];
+}
+
 export function AQITrend(
   data: AQIData,
-  dateRange: { startOfWeek: Date; endOfWeek: Date }
-): { day: string; AQI: number }[] {
-  function getDayOfWeek(date: Date): string {
-    const days = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
-    return days[date.getUTCDay()];
-  }
-
-  // Generate the full week's structure with default AQI value of -999
-  const weekTrend: { day: string; AQI: number }[] = [];
+  date: Date | undefined
+): { date: string; AQI: number }[] {
+  const weekTrend: { date: string; AQI: number }[] = [];
+  const { startOfWeek, endOfWeek } = getWeekRange(date);
   for (
-    let d = dateRange.startOfWeek;
-    d <= dateRange.endOfWeek;
+    let d = new Date(startOfWeek);
+    d <= endOfWeek;
     d.setDate(d.getDate() + 1)
   ) {
     weekTrend.push({
-      day: getDayOfWeek(new Date(d)),
+      date: getDayOfWeek(d),
       AQI: -1,
     });
   }
@@ -482,11 +481,8 @@ export function AQITrend(
   // Update the AQI values based on the input data
   data.forEach((entry) => {
     const entryDate = new Date(entry.date);
-    if (
-      entryDate >= dateRange.startOfWeek &&
-      entryDate <= dateRange.endOfWeek
-    ) {
-      const index = entryDate.getDate() - dateRange.startOfWeek.getDate();
+    if (entryDate >= startOfWeek && entryDate <= endOfWeek) {
+      const index = entryDate.getDate() - startOfWeek!.getDate();
       weekTrend[index].AQI = entry.AQI;
     }
   });
