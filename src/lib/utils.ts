@@ -380,6 +380,7 @@ export function dataFreq(data: SensorData, interval: number): SensorData {
       case 1: // 1 hour
         key = String(
           date.getMonth() +
+            1 +
             "/" +
             date.getDate() +
             "/" +
@@ -392,6 +393,7 @@ export function dataFreq(data: SensorData, interval: number): SensorData {
       case 2: // 6 hours
         key = String(
           date.getMonth() +
+            1 +
             "/" +
             date.getDate() +
             "/" +
@@ -403,12 +405,13 @@ export function dataFreq(data: SensorData, interval: number): SensorData {
         break;
       case 3: // 1 day
         key = String(
-          date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear()
+          date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear()
         );
         break;
       default:
         key = String(
           date.getMonth() +
+            1 +
             "/" +
             date.getDate() +
             "/" +
