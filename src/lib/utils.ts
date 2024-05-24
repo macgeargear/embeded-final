@@ -228,7 +228,7 @@ export function getIcon(title: string, value: number): JSX.Element {
     case "Humidity Level":
       if (value < 50) return Icons.desert({ width: 40, height: 40 });
       else return Icons.water({ width: 40, height: 40 });
-    case "Carbonmonoxide Level":
+    case "Carbon monoxide Level":
       if (value < 35) return Icons.smile({ width: 40, height: 40 });
       else return Icons.car({ width: 40, height: 40 });
     default:
@@ -286,7 +286,7 @@ export function getSign(title: string): string {
       return "°C";
     case "Humidity Level":
       return "%";
-    case "Carbonmonoxide Level":
+    case "Carbon monoxide Level":
       return "PPM";
     default:
       return "";

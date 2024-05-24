@@ -6,7 +6,7 @@ export default function Home() {
     <MaxWidthWrapper className="-mt-10">
       <div className="py-20 mx-auto text-center flex flex-col items-center">
         <h1 className="text-3xl font-semibold mb-8">
-          Embeded System final project
+          Embedded System Laboratory final project
         </h1>
         <Dashboard />
       </div>
